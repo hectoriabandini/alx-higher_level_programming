@@ -1,9 +1,12 @@
 #!/usr/bin/python3
-"""
-a function that calculate
-the sum of two variables
-"""
-
 def add(a, b):
-    sum = a + b
-    return sum
+    """My addition function
+
+    Args:
+        a: first integer
+        b: second integer
+
+    Returns:
+        The return value. a + b
+    """
+    return (a + b)
