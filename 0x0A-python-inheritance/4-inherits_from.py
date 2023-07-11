@@ -1,8 +1,17 @@
 #!/usr/bin/python3
+"""Defines an inherited class-checking function."""
+
 
 def inherits_from(obj, a_class):
-	"""Get the set of classes that obj is an instance of """
-	obj_classes = set(type(obj).__mro__)
+	"""Checks if an object is an inherited instance of a class.
 
-	""" Check if a_class is present in the set of classes"""
-	return any(a_class in cls.__mro__ for cls in obj_classes)
+	Args:
+		obj (any): The object to check.
+		a_class (type): The class to match the type of obj to.
+		Returns:
+		If obj is an inherited instance of a_class - True.
+		Otherwise - False.
+	"""
+	if issubclass(type(obj), a_class) and type(obj) != a_class:
+		return True
+	return False
