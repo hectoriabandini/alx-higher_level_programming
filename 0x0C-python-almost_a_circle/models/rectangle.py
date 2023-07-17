@@ -29,7 +29,7 @@ class Rectangle(Base):
 
     @property
     def width(self):
-        """Set/get the width of the Rectangle."""
+        """get the width of the Rectangle."""
         return self.__width
 
     @width.setter
@@ -80,11 +80,11 @@ class Rectangle(Base):
         self.__y = value
 
     def area(self):
-        """Return the area of the Rectangle."""
+        """Return area of  Rectangle."""
         return self.width * self.height
 
     def display(self):
-        """Print the Rectangle using the `#` character."""
+        """ Rectangle is printed using the `#` character."""
         if self.width == 0 or self.height == 0:
             print("")
             return
