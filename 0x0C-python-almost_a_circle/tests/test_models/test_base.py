@@ -2,14 +2,14 @@
 """Defines unittests for base.py.
 
 Unittest classes:
-    TestBase_instantiation
-    TestBase_to_json_string
-    TestBase_save_to_file
-    TestBase_from_json_string
-    TestBase_create
-    TestBase_load_from_file
-    TestBase_save_to_file_csv
-    TestBase_load_from_file_csv
+    TestBase_instantiation - line 21
+    TestBase_to_json_string - line 108
+    TestBase_save_to_file - line 154
+    TestBase_from_json_string - line 232
+    TestBase_create - line 286
+    TestBase_load_from_file - line 338
+    TestBase_save_to_file_csv - line 404
+    TestBase_load_from_file_csv - line 482
 """
 import os
 import unittest
@@ -19,7 +19,10 @@ from models.square import Square
 
 
 class TestBase_instantiation(unittest.TestCase):
-    """Unittests for testing Base class instantiation."""
+    """Unittests for testing instantiation of the Base class."""
+	
+    def setUp(self):
+        Base._Base_nb_objects = 0
 
     def test_no_arg(self):
         b1 = Base()
@@ -156,7 +159,7 @@ class TestBase_save_to_file(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
-        """Deletion of files."""
+        """Delete any created files."""
         try:
             os.remove("Rectangle.json")
         except IOError:
@@ -230,7 +233,7 @@ class TestBase_save_to_file(unittest.TestCase):
 
 
 class TestBase_from_json_string(unittest.TestCase):
-    """Unittests for testing from_json"""
+    """Unittests for testing from_json_string method of Base class."""
 
     def test_from_json_string_type(self):
         list_input = [{"id": 89, "width": 10, "height": 4}]
@@ -406,7 +409,7 @@ class TestBase_save_to_file_csv(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
-        """File deletion."""
+        """Delete any created files."""
         try:
             os.remove("Rectangle.csv")
         except IOError:
@@ -452,6 +455,13 @@ class TestBase_save_to_file_csv(unittest.TestCase):
         with open("Base.csv", "r") as f:
             self.assertTrue("8,10,7,2", f.read())
 
+    def test_save_to_file_csv_overwrite(self):
+        s = Square(9, 2, 39, 2)
+        Square.save_to_file_csv([s])
+        s = Square(10, 7, 2, 8)
+        Square.save_to_file_csv([s])
+        with open("Square.csv", "r") as f:
+            self.assertTrue("8,10,7,2", f.read())
 
     def test_save_to_file__csv_None(self):
         Square.save_to_file_csv(None)
@@ -494,6 +504,12 @@ class TestBase_load_from_file_csv(unittest.TestCase):
         list_rectangles_output = Rectangle.load_from_file_csv()
         self.assertEqual(str(r1), str(list_rectangles_output[0]))
 
+    def test_load_from_file_csv_second_rectangle(self):
+        r1 = Rectangle(10, 7, 2, 8, 1)
+        r2 = Rectangle(2, 4, 5, 6, 2)
+        Rectangle.save_to_file_csv([r1, r2])
+        list_rectangles_output = Rectangle.load_from_file_csv()
+        self.assertEqual(str(r2), str(list_rectangles_output[1]))
 
     def test_load_from_file_csv_rectangle_types(self):
         r1 = Rectangle(10, 7, 2, 8, 1)
@@ -523,13 +539,13 @@ class TestBase_load_from_file_csv(unittest.TestCase):
         output = Square.load_from_file_csv()
         self.assertTrue(all(type(obj) == Square for obj in output))
 
-    def test_load_from_file_csv_more_than_one_arg(self):
-        with self.assertRaises(TypeError):
-            Base.load_from_file_csv([], 1)
-
     def test_load_from_file_csv_no_file(self):
         output = Square.load_from_file_csv()
         self.assertEqual([], output)
+
+    def test_load_from_file_csv_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Base.load_from_file_csv([], 1)
 
 
 if __name__ == "__main__":
