@@ -1,2 +1,2 @@
--- A query that list all tables of database
+-- A query that list all the tables of database
 SHOW TABLES;
