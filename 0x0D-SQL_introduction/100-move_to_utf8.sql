@@ -1,4 +1,5 @@
--- Converts the entire database of hbtn_0c_0 to UTF8.
-USE `hbtn_0c_0`
-ALTER TABLE `first_table`
-CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+--a script that displays the average temperature (Fahrenheit)
+SELECT city, AVG(temperature) as avg_temp
+FROM temperature_data
+GROUP BY city
+ORDER BY avg_temp DESC;
