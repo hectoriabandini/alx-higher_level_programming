@@ -1,2 +1,2 @@
--- A Query to list all databases on a server
+-- A Query to list all databases on the server
 SHOW DATABASES;
